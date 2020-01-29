@@ -1,4 +1,4 @@
-#!/usr/bin/pythoni3
+#!/usr/bin/python
 #--------------------------------------
 #    ___  ___  _ ____
 #   / _ \/ _ \(_) __/__  __ __
@@ -17,24 +17,15 @@
 #
 # https://www.raspberrypi-spy.co.uk/
 #
-# Change : Eric Angenault
-# Date   : 27/01/2010
-#          Mosquitto 
 #--------------------------------------
 import smbus
 import time
-import os
-import time
-import sys
-import paho.mqtt.client as mqtt
-import json
-
 from ctypes import c_short
 from ctypes import c_byte
 from ctypes import c_ubyte
 
 DEVICE = 0x76 # Default device I2C address
-HOST = 'localhost';
+
 
 bus = smbus.SMBus(1) # Rev 2 Pi, Pi 2 & Pi 3 uses bus 1
                      # Rev 1 Pi uses bus 0
@@ -176,22 +167,6 @@ def main():
   print "Temperature : ", temperature, "C"
   print "Pressure : ", pressure, "hPa"
   print "Humidity : ", humidity, "%"
-
-# Send to Mosquitto
-
-  sensor_data = {'temperature': 0, 'pressure': 0, 'humidity': 0}
-
-  client = mqtt.Client()
-  client.connect(HOST, 1883, 30)
-  client.loop_start()
-
-  sensor_data['temperature'] = temperature
-  sensor_data['pressure'] = pressure
-  sensor_data['humidity'] = humidity
-
-  client.publish('sensors/bme280', json.dumps(sensor_data), 1)
-  client.loop_stop()
-  client.disconnect()
 
 if __name__=="__main__":
    main()

@@ -5,3 +5,13 @@ sudo wget http://repo.mosquitto.org/debian/mosquitto-buster.list
 sudo apt-get update 
 sudo apt-get install mosquitto 
 sudo apt-get install mosquitto-clients
+
+/etc/systemd/system/multi-user.target.wants/mosquitto.service
+
+[Service]
+
++ PermissionsStartOnly=true
++ ExecStartPre=-/bin/mkdir -p /var/log/mosquitto
++ ExecStartPre=-/bin/chown mosquitto:adm /var/log/mosquitto
++ ExecStartPre=-/bin/chmod 740 /var/log/mosquitto
+

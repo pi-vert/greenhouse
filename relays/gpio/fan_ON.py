@@ -10,7 +10,7 @@
 import RPi.GPIO as GPIO
 import time
 
-Relay = 21
+Relay = 26
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -19,6 +19,5 @@ GPIO.setup(Relay,GPIO.OUT)
 
 print("Setup The Relay Module is [success]")
 
-GPIO.output(Relay,GPIO.HIGH)
-print("Channel 1:The Common Contact is access to the Normal Open Contact!")
+GPIO.output(Relay,GPIO.LOW)
 		
