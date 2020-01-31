@@ -19,9 +19,6 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(Relay,GPIO.OUT)
-
-print("Setup The Relay Module is [success]")
-
 GPIO.output(Relay,GPIO.LOW)
 
 sensor_data = {'light': 1}

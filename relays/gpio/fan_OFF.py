@@ -9,6 +9,8 @@
 # -*- coding:utf-8 -*-
 import RPi.GPIO as GPIO
 import time
+import paho.mqtt.client as mqtt
+import json
 
 Relay = 26
 
@@ -16,6 +18,16 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(Relay,GPIO.OUT)
-
 GPIO.output(Relay,GPIO.HIGH)
+
+
+sensor_data = {'fan': 0}
+
+client = mqtt.Client()
+client.connect('localhost', 1883, 30)
+client.loop_start()
+
+client.publish('sensors/fan', json.dumps(sensor_data), 1)
+client.loop_stop()
+client.disconnect()
 		
