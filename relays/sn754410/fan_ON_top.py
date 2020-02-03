@@ -12,7 +12,7 @@ GPIO.setup(6,GPIO.OUT)
 GPIO.output(5,GPIO.HIGH)
 GPIO.output(6,GPIO.LOW)
 
-sensor_data = {'fan/top': 1}
+sensor_data = {'fan': 1, 'fan/top': 1}
 
 client = mqtt.Client()
 client.connect('localhost', 1883, 30)

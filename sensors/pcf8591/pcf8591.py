@@ -37,14 +37,14 @@ sensor_data['potentiometer'] = value
 bus.write_byte(addresse,0x40)
 value = bus.read_byte(addresse)
 time.sleep(1)
-value = bus.read_byte(addresse)
+value = (255 - bus.read_byte(addresse))*100/255
 print("Thermistor: %3d" %(value))
 sensor_data['thermistor'] = value
 
 bus.write_byte(addresse,0x42)
 value = bus.read_byte(addresse)
 time.sleep(1)
-value = bus.read_byte(addresse)
+value = (255 - bus.read_byte(addresse))*100/255
 print("Photoresistor: %3d" %(value))
 sensor_data['photoresistor'] = value
 
