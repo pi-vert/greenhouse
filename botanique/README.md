@@ -32,3 +32,6 @@ Floraison lorque le jour augmente
 
 ### Indifférentes
 Tomate
+
+### Aphotiques
+Aucune lumière nécessaire (ex: plantes à bulbe).
