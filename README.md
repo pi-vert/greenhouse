@@ -8,7 +8,7 @@ Le but de ce projet est d'obtenir des poivrons tout au long de l'année en fourn
 
 La structure est en deux niveaux séparés par un cadre en bois contenant le système électrique. Le niveau bas est un aquarium pour assurere l'étanchéité et le niveau supérieur est en plexiglas pour un démontage facile.
 
-[Plus d'infos sur la structure](docs/structure.md)
+[Plus d'infos sur la structure](docs/structureV2.md)
 
 ### Montage électrique
 
