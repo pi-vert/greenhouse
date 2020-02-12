@@ -1,0 +1,4 @@
+L3G4200D:L3G4200D.c L3G4200D.h
+	gcc -Wall L3G4200D.c -o L3G4200D -lwiringPi
+clean:L3G4200D
+	rm L3G4200D

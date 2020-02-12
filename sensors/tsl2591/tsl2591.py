@@ -36,7 +36,7 @@ client.loop_start()
 
 sensor_data['light/visible'] = visible
 sensor_data['light/infrared'] = infrared
-sensor_data['light/lux'] = infrared
+sensor_data['light/lux'] = lux
  
 client.publish('sensors/tsl2591', json.dumps(sensor_data), 1)
 client.loop_stop()

@@ -1,0 +1,4 @@
+L3G4200D:L3G4200D.c L3G4200D.h
+	gcc -Wall L3G4200D.c -o L3G4200D -lbcm2835
+clean:
+	rm L3G4200D

@@ -37,23 +37,23 @@ sensor_data['potentiometer'] = value
 bus.write_byte(addresse,0x40)
 value = bus.read_byte(addresse)
 time.sleep(1)
-value = (255 - bus.read_byte(addresse))*100/255
-print("Thermistor: %3d" %(value))
-sensor_data['thermistor'] = value
+value = bus.read_byte(addresse)
+print("Analog: %3d" %(value))
+sensor_data['analog'] = value
 
 bus.write_byte(addresse,0x42)
 value = bus.read_byte(addresse)
 time.sleep(1)
-value = (255 - bus.read_byte(addresse))*100/255
+value = (255 - bus.read_byte(addresse))
 print("Photoresistor: %3d" %(value))
 sensor_data['photoresistor'] = value
 
 bus.write_byte(addresse,0x43)
 value = bus.read_byte(addresse)
 time.sleep(1)
-value = bus.read_byte(addresse)
-print("Analog: %3d" %(value))
-sensor_data['analog'] = value
+value = (255 - bus.read_byte(addresse))
+print("Thermistor: %3d" %(value))
+sensor_data['thermistor'] = value
 
 client.publish('sensors/pcf8591', json.dumps(sensor_data), 1)
 client.loop_stop()
