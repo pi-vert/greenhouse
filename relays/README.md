@@ -27,12 +27,13 @@ L'ampérage est aux environs des 500mA, ce qui limite à une puissance de 6W pou
 Lorsque la puissance est trop élevée pour pouvoir utiliser un micro-contrôleur, on peut utiliser 2 relais et les cabler sur un principe proche du va et vient.
 Chaque relai est indiqué comme suit:
 ```
+____I____
 a   b   c
 ---  \---
 ```
 Ce qui signifie que les bornes a et b sont connectées lors de l'activation du relai. Le cablage du moteur sera le suivant:
 ```
-      _________
+      ____I____
       a   b   c
       ---  \---
       !   !   
@@ -55,9 +56,9 @@ GND ------)---+------+   !
 ## Cas possibles
 Pour mieux comprendre l'utilisation des relais, on représente les 4 cas possibles:
 ```
-| Relai I  | Relai II | Résultat
-| -------- | -------- | --------
-| OFF      | OFF      | Sens anti-horaire
+| Relai I  | Relai II | Résultat            |
+| -------- | -------- | --------            |
+| OFF      | OFF      | Sens anti-horaire   |
 ```
       ____I____      ____II___   
       a   b   c      a   b   c
@@ -69,9 +70,9 @@ GND ------)---+          !
           !    -   +     !
           +-----(M)------+
 ```
-| Relai I  | Relai II | Résultat
-| -------- | -------- | --------
-| ON       | ON       | Sens horaire
+| Relai I  | Relai II | Résultat       |
+| -------- | -------- | --------       |
+| ON       | ON       | Sens horaire   |
 ```
       ____I____      ____II___   
       a   b   c      a   b   c
@@ -83,9 +84,9 @@ GND ------)----------+   !
           !    +   -     !
           +-----(M)------+
 ```
-| Relai I  | Relai II | Résultat
-| -------- | -------- | --------
-| ON       | OFF      | Sens horaire
+| Relai I  | Relai II | Résultat |
+| -------- | -------- | -------- | 
+| ON       | OFF      | STOP     |
 ```
       ____I____      ____II___   
       a   b   c      a   b   c
@@ -97,9 +98,9 @@ GND --    !              !
           !    +   +     !
           +-----(M)------+
 ```
-| Relai I  | Relai II | Résultat
-| -------- | -------- | --------
-| OFF      | ON       | Sens horaire
+| Relai I  | Relai II | Résultat |
+| -------- | -------- | -------- |
+| OFF      | ON       | STOP     |
 ```
       ____I____      ____II___   
       a   b   c      a   b   c
