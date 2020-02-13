@@ -51,6 +51,7 @@ L'activation du relai démarre le moteur dans un sens, disons horaire, le schém
 GND ------)---+------+   !
           !              !
 		  +-----(M)------+
+```		  
 ## Cas possibles
 Pour mieux comprendre l'utilisation des relais, on représente les 4 cas possibles:
 ```
