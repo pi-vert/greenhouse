@@ -55,7 +55,6 @@ GND ------)---+------+   !
 ```
 ## Cas possibles
 Pour mieux comprendre l'utilisation des relais, on représente les 4 cas possibles:
-```
 | Relai I  | Relai II | Résultat            |
 | -------- | -------- | --------            |
 | OFF      | OFF      | Sens anti-horaire   |
