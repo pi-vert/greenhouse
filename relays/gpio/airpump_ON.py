@@ -12,7 +12,7 @@ import time
 import paho.mqtt.client as mqtt
 import json
 
-Relay = 21
+Relay = 20
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
