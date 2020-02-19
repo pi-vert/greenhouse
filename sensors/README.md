@@ -4,6 +4,8 @@
 
 ![Photo du capteur](pcf8591.jpg)
 
+Attention! Ce convertisseur est en 8 bits, pour une meilleure précision, il faudrait plutôt partir sur un MCP3008.
+
 [Fiche technique](https://www.banggood.com/PCF8591-ADDA-Analog-Digital-Analog-Converter-Module-Measure-Light-and-Temperature-Produce-Various-Waveforms-p-1577996.html?rmmds=myorder&cur_warehouse=CN)
 
 ### Entrées
