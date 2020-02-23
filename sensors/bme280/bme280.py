@@ -18,16 +18,17 @@
 # https://www.raspberrypi-spy.co.uk/
 #
 # Change : Eric Angenault
-# Date   : 27/01/2010
-#          Mosquitto 
+# Date   : 27/01/2020
+#          Mosquitto
+#          23/02/2020 
+#          InfluxDB 
+#          Python3
 #--------------------------------------
 import smbus
 import time
 import os
 import time
 import sys
-import paho.mqtt.client as mqtt
-import json
 
 from ctypes import c_short
 from ctypes import c_byte
@@ -165,33 +166,45 @@ def readBME280All(addr=DEVICE):
 
   return temperature/100.0,pressure/100.0,humidity
 
+def publish (sensor, measurement, value) :
+    import paho.mqtt.client as mqtt
+    import json
+    client = mqtt.Client()
+    client.connect('localhost', 1883, 30)
+    client.loop_start()
+    client.publish( sensor, json.dumps( {measurement: value }), 1)
+    client.loop_stop()
+    client.disconnect()
+    return
+
+def store (sensor, measurement, value) :
+    from influxdb_client import InfluxDBClient, Point
+    from influxdb_client.client.write_api import SYNCHRONOUS
+    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    query_api = client.query_api()
+    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
+    return 
+
 def main():
 
   (chip_id, chip_version) = readBME280ID()
-  print "Chip ID     :", chip_id
-  print "Version     :", chip_version
+  print ("Chip ID     :", chip_id)
+  print ("Version     :", chip_version)
 
   temperature,pressure,humidity = readBME280All()
 
-  print "Temperature : ", temperature, "C"
-  print "Pressure : ", pressure, "hPa"
-  print "Humidity : ", humidity, "%"
+  print ("Temperature : ", temperature, "C")
+  print ("Pressure : ", pressure, "hPa")
+  print ("Humidity : ", humidity, "%")
 
-# Send to Mosquitto
-
-  sensor_data = {'temperature': 0, 'pressure': 0, 'humidity': 0}
-
-  client = mqtt.Client()
-  client.connect(HOST, 1883, 30)
-  client.loop_start()
-
-  sensor_data['temperature'] = temperature
-  sensor_data['pressure'] = pressure
-  sensor_data['humidity'] = humidity
-
-  client.publish('sensors/bme280', json.dumps(sensor_data), 1)
-  client.loop_stop()
-  client.disconnect()
+  publish('sensors/bme280/1', 'temperature/air', temperature)
+  store('sensors/bme280/1', 'temperature/air', temperature)
+  publish('sensors/ds18b20/1', 'pressure', pressure)
+  store('sensors/ds18b20/1', 'pressure', pressure)
+  publish('sensors/ds18b20/1', 'humidity', humidity)
+  store('sensors/ds18b20/1', 'humidity', humidity)
 
 if __name__=="__main__":
    main()
