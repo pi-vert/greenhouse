@@ -5,6 +5,7 @@ import time
 buzzer = 25
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(buzzer,GPIO.OUT)
+GPIO.PWM(buzzer,GPIO.LOW)
 
 p = GPIO.PWM(buzzer,50)
 p.start(0)

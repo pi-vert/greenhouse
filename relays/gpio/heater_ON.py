@@ -1,34 +1,35 @@
-##################################################
-
-#           P26 ----> Relay_Ch1
-#			P20 ----> Relay_Ch2
-#			P21 ----> Relay_Ch3
-
-##################################################
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
 import RPi.GPIO as GPIO
 import time
-import sys
-import paho.mqtt.client as mqtt
-import json
 
-Relay= 26 
+Relay = 26
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(Relay,GPIO.OUT)
-
 GPIO.output(Relay,GPIO.LOW)
 
-sensor_data = {'heater': 1}
 
-client = mqtt.Client()
-client.connect('localhost', 1883, 30)
-client.loop_start()
+def publish (sensor, measurement, value) :
+    import paho.mqtt.client as mqtt
+    import json
+    client = mqtt.Client()
+    client.connect('localhost', 1883, 30)
+    client.loop_start()
+    client.publish( sensor, json.dumps( {measurement: value }), 1)
+    client.loop_stop()
+    client.disconnect()
+    return
 
-client.publish('sensors/light', json.dumps(sensor_data), 1)
-client.loop_stop()
-client.disconnect()
+def store (sensor, measurement, value) :
+    from influxdb_client import InfluxDBClient, Point
+    from influxdb_client.client.write_api import SYNCHRONOUS
+    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    query_api = client.query_api()
+    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
+    return 
 
+publish('relays/gpio', 'heater', 1)
+store('relays/gpio', 'heater', 1)
