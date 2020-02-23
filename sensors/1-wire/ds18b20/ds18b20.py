@@ -32,7 +32,7 @@ def store (sensor, measurement, value) :
     client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
     write_api = client.write_api(write_options=SYNCHRONOUS)
     query_api = client.query_api()
-    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    p = Point(measurement).tag("source", "vert").field(sensor, value)
     write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
     return 
 
@@ -40,6 +40,6 @@ contenuFich = lireFichier("/sys/bus/w1/devices/28-01192108919d/w1_slave")
 temperature = recupTemp (contenuFich)
 print ("Temperature: ", temperature)
 
-publish('sensors/ds18b20/1', 'temperature/eau', temperature)
-store('sensors/ds18b20/1', 'temperature/eau', temperature)
+publish('sensors/ds18b20/1', 'temperature', temperature)
+store('sensors/ds18b20/1', 'temperature', temperature)
  
