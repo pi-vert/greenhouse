@@ -1,6 +1,6 @@
 import sys
-import paho.mqtt.client as mqtt
-import json
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
 
 def lireFichier (emplacement) :
     fichTemp = open(emplacement)
@@ -15,29 +15,31 @@ def recupTemp (contenuFich) :
     temperature = temperature / 1000
     return temperature
 
-contenuFich1 = lireFichier("/sys/bus/w1/devices/28-01192108919d/w1_slave")
-contenuFich2 = lireFichier("/sys/bus/w1/devices/28-0000061e147a/w1_slave")
+def publish (sensor, measurement, value) :
+    import paho.mqtt.client as mqtt
+    import json
+    client = mqtt.Client()
+    client.connect('localhost', 1883, 30)
+    client.loop_start()
+    client.publish( sensor, json.dumps( {measurement: value }), 1)
+    client.loop_stop()
+    client.disconnect()
+    return
 
-temperature1 = recupTemp (contenuFich1)
-temperature2 = recupTemp (contenuFich2)
+def store (sensor, measurement, value) :
+    from influxdb_client import InfluxDBClient, Point
+    from influxdb_client.client.write_api import SYNCHRONOUS
+    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    query_api = client.query_api()
+    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
+    return 
 
-print "Temperature Capteur EAU: " ,
-print temperature1
-print "Temperature Capteur AIR: " ,
-print temperature2
+contenuFich = lireFichier("/sys/bus/w1/devices/28-01192108919d/w1_slave")
+temperature = recupTemp (contenuFich)
+print ("Temperature: ", temperature)
 
-# Send to Mosquitto
-
-sensor_data = {'temperature/air': 0, 'temperature/eau': 0}
-
-client = mqtt.Client()
-client.connect('localhost', 1883, 30)
-client.loop_start()
-
-sensor_data['temperature/air'] = temperature1
-sensor_data['pressure/eau'] = temperature2
-
-client.publish('sensors/ds18b20', json.dumps(sensor_data), 1)
-client.loop_stop()
-client.disconnect()
-
+publish('sensors/ds18b20/1', 'temperature/eau', temperature)
+store('sensors/ds18b20/1', 'temperature/eau', temperature)
+ 
