@@ -6,7 +6,7 @@ DEVICE_BUS = 1
 DEVICE_ADDR = 0x10
 bus = smbus.SMBus(DEVICE_BUS)
 
-bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
+bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
 
 def publish (sensor, measurement, value) :
     import paho.mqtt.client as mqtt
@@ -25,7 +25,7 @@ def store (sensor, measurement, value) :
     client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
     write_api = client.write_api(write_options=SYNCHRONOUS)
     query_api = client.query_api()
-    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    p = Point(measurement).tag("source", "vert").field(sensor, value)
     write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
     return
 

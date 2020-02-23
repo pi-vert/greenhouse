@@ -199,12 +199,12 @@ def main():
   print ("Pressure : ", pressure, "hPa")
   print ("Humidity : ", humidity, "%")
 
-  publish('sensors/bme280/1', 'temperature/air', temperature)
-  store('sensors/bme280/1', 'temperature/air', temperature)
-  publish('sensors/ds18b20/1', 'pressure', pressure)
-  store('sensors/ds18b20/1', 'pressure', pressure)
-  publish('sensors/ds18b20/1', 'humidity', humidity)
-  store('sensors/ds18b20/1', 'humidity', humidity)
+  publish('sensors/bme280/1', 'temperature', temperature)
+  store('sensors/bme280/1', 'temperature', temperature)
+  publish('sensors/bme280/1', 'pressure', pressure)
+  store('sensors/bme280/1', 'pressure', pressure)
+  publish('sensors/bme280/1', 'humidity', humidity)
+  store('sensors/bme280/1', 'humidity', humidity)
 
 if __name__=="__main__":
    main()

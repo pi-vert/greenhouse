@@ -25,7 +25,7 @@ def store (sensor, measurement, value) :
     client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
     write_api = client.write_api(write_options=SYNCHRONOUS)
     query_api = client.query_api()
-    p = Point(sensor).tag("source", "vert").field(measurement, value)
+    p = Point(measurement).tag("source", "vert").field(sensor, value)
     write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
     return 
 
