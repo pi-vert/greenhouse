@@ -1,5 +1,11 @@
 # Capteurs
 
+| Capteur  | Temperature | Pression | Humidité | Altitude |
+|----------|-------------|----------|----------|----------|
+| BME280   |             |          |     X    |          |
+| BMP280   |      X      |    X     |          |    X     |
+
+
 ## PCF8591: Convertisseur Analogique-Digital
 
 ![Photo du capteur](pcf8591.jpg)
