@@ -47,8 +47,8 @@ def store (sensor, measurement, value) :
 
 publish('sensors/tsl2591', 'light/visible', visible)
 store('sensors/tsl2591', 'light/visible', visible)
-publish('sensors/tsl2591', 'light/infrared', visible)
-store('sensors/tsl2591', 'light/infrared', visible)
-publish('sensors/tsl2591', 'light/lux', visible)
-store('sensors/tsl2591', 'light/lux', visible)
+publish('sensors/tsl2591', 'light/infrared', infrared)
+store('sensors/tsl2591', 'light/infrared', infrared)
+publish('sensors/tsl2591', 'light/lux', lux)
+store('sensors/tsl2591', 'light/lux', lux)
 
