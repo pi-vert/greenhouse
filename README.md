@@ -131,6 +131,14 @@ La structure est en deux niveaux séparés par un cadre en bois contenant le sys
 |   39 | - GND       |            |
 |   40 |             |            |
 
+## I2C
+
+| Adresse | Description |
+| ------- | ----------- |
+| 10      | Relai 12V   |            
+| 29      | TSL         |
+| 51      | DVK512      |
+| 76      | BME280      |
 
 ### Relais
 

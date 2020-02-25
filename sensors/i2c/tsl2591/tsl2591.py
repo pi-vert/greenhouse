@@ -1,10 +1,8 @@
 import time
 import sys
 import os
-import paho.mqtt.client as mqtt
-import json
 
-libdir = '/home/pi/greenhouse/sensors/tsl2591/lib'
+libdir = '/home/pi/greenhouse/sensors/i2c/tsl2591/lib'
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
@@ -26,19 +24,31 @@ full_spectrum = sensor.Read_FullSpectrum
 print('Full spectrum (IR + visible) light: %d\r\n'%full_spectrum)
 sensor.Disable()
 
-# Send to Mosquitto
+def publish (sensor, measurement, value) :
+    import paho.mqtt.client as mqtt
+    import json
+    client = mqtt.Client()
+    client.connect('localhost', 1883, 30)
+    client.loop_start()
+    client.publish( sensor, json.dumps( {measurement: value }), 1)
+    client.loop_stop()
+    client.disconnect()
+    return
 
-sensor_data = {'light/visible': 0, 'light/infrared': 0, 'light/lux': 0}
+def store (sensor, measurement, value) :
+    from influxdb_client import InfluxDBClient, Point
+    from influxdb_client.client.write_api import SYNCHRONOUS
+    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    query_api = client.query_api()
+    p = Point(measurement).tag("source", "vert").field(sensor, value)
+    write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
+    return 
 
-client = mqtt.Client()
-client.connect('localhost', 1883, 30)
-client.loop_start()
-
-sensor_data['light/visible'] = visible
-sensor_data['light/infrared'] = infrared
-sensor_data['light/lux'] = lux
- 
-client.publish('sensors/tsl2591', json.dumps(sensor_data), 1)
-client.loop_stop()
-client.disconnect()
+publish('sensors/tsl2591', 'light/visible', visible)
+store('sensors/tsl2591', 'light/visible', visible)
+publish('sensors/tsl2591', 'light/infrared', visible)
+store('sensors/tsl2591', 'light/infrared', visible)
+publish('sensors/tsl2591', 'light/lux', visible)
+store('sensors/tsl2591', 'light/lux', visible)
 
