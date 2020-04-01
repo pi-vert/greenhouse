@@ -11,6 +11,28 @@ La V1 était une maquette qui a permis d'identifier des erreurs plus ou moins fl
 - Les files des breadboards qui partent dans tous les sens vont être remplacés par des concentrateurs et/ou des multiplexeurs
 - L'écran tactile est totalement inutile car trop petit et trop consommateur
 
+_Bientôt la V3:_
+
+C'est le printemps et actuellement les fraises en hydroponie sont déjà mûres sur le balcon. Le système est constitué d'un circuit d'eau, d'une pompe à eau, d'une pompe à air et de leds agricoles, le tout est déclenché par un programmateur électrique de 7h à 22h, toutes les quinze minutes avec une fréquence moins élevéelors des périodes théoriquement ensoleillées (ce qui est plutôt rare avec un balcon orienté ouest).
+Bref, c'est au doigt mouillé mais le but était simplement de valider qu'on pouvat passer l'hiver sans dégât. La réponse est oui pour les fraises mais non pour les poivrons.
+La première évolution serait de remplacer ce programmateur électrique par un vieux X10 que je ressors de temps pour sensibiliser la famille à la domotique (ces expériences se terminent toujours en eau de boudin, ils adorent les interrupteurs).      
+
+## Répertoires
+
+Ce projet n'a pas vraiment d'arborescence car il est constitué de sujets transverses, on peut en utiliser tout ou partie.
+
+Par ordre alphabétique:
+| botanique   | Données sur les plantes, le but sera d'utiliser ces informations pour définir des modèles à appliquer sur le système. |
+| cloud       | Partie utilisant l'offre cloud d'influxDB
+| components  | Informations techniques sur les différentes pièces composant la serre |
+| python      | Modules python appelés par les scripts de la serrer |
+| relays      | Partie actionneurs (actuators) pour agir sur le système |
+| sensors     | Partie capteurs (sensors) pour connaître l'état du système |
+| softwares   | Informations sur les installations logicielles |
+| states      | Fichiers de données pour avoir un état local du système (sorte de cache pour avoir la dernière valeur |
+| system      | Capteur sur le raspberry  |
+| www         | Interface web pour centraliser les informations | 
+
 ## Montage
 
 _En résumé:_

@@ -23,7 +23,7 @@ def influxDB (sensor, measurement, value) :
     return 
 
 def file (sensor, measurement, value) :
-    f = open(STATES_DIR + '/' + sensor + '.txt', "w")
+    f = open(STATES_DIR + '/' + sensor + '/' +  measurement + '.txt', "w")
     f.write( str(value) )
     f.close()   
  

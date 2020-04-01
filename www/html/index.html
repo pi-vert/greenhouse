@@ -8,15 +8,10 @@
 <meta name="generator" content="Jekyll v3.8.6">
 <title>PiVert</title>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-<!-- script src="dashboard.js"></script -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Favicons -->
 <style>
@@ -59,63 +54,100 @@
         <div id="CONTROL" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Contrôle</h1>
         </div>
-        <div id="ContentDetail">
-Pompe à air <input id="toggle-event" type="checkbox" data-toggle="toggle">
-<script>
-  $(function() {
-    $('#toggle-event').change(function() {
-      $('#console-event').html('Toggle: ' + $(this).prop('checked'))
-    })
-  })
-</script>
- </div> 
+	<button type="button" class="btn" id="airpump" onclick="Actuator(this)">Pompe à air</button>
+	<button type="button" class="btn" id="waterpump" onclick="Actuator(this)">Pompe à eau</button>
+	<button type="button" class="btn" id="sink"onclick="Actuator(this)">Purge</button>
+
+        <button type="button" class="btn" id="light" onclick="Actuator(this)">Lumière</button>
+        <button type="button" class="btn" id="fan" onclick="Actuator(this)">Ventilateur</button>
+        <button type="button" class="btn" id="heater"onclick="Actuator(this)">Résistance</button>
 
     </main>
 </div>
 </div>
 <script type="text/javascript">
 feather.replace();
-/*
-const urlParams = new URLSearchParams(window.location.search);
-const jobName = urlParams.get('jobName');
-const instanceId = urlParams.get('instanceId');
-const jobId = urlParams.get('jobId');
-const lastStart = urlParams.get('lastStart');
-const lastEnd = urlParams.get('lastEnd');
-const runMachine = urlParams.get('runMachine');
-const jobStatus = urlParams.get('jobStatus');
-$('#jobName').val(jobName);
-*/
+var api = 'http://192.168.1.39:8000';
 
-function colorStatus(response) {
-    switch (response) {
-            case 'FAILURE':
-                    status = 'danger';
-                    break;
-            default:
-                    status = response.toLowerCase();
+var sensors = ['airpump','waterpump','sink','light','heater','fan' ];
+sensors.forEach(Sensor);
+
+function getEndPoint(id) {
+var actuator
+    switch (id) {
+        case 'airpump':
+            actuator = 'relays/gpio/airpump';
+            break;
+        case 'waterpump':
+            actuator = 'relays/gpio/waterpump';
+            break;
+        case 'sink':
+            actuator = 'relays/i2c/sink';
+            break;
+        case 'light':
+            actuator = 'relays/i2c/light';
+            break;
+        case 'heater':
+            actuator = 'relays/gpio/heater';
+            break;
+        case 'fan':
+            actuator = 'relays/i2c/fan';
+            break;
+        default:
+            actuator = 'relays/gpio/airpump';
     }
-    return status;
+return actuator;
 }
 
-function Diag() {
-    var jobName = $('#jobName').val();
-    var instanceId = $('#instanceId').val();
-    var api = "http://"+window.location.hostname+"/api/v1/bundles/ats/instances/"+instanceId;
+function Actuator (ele) {
+var actuator
+    actuator=getEndPoint(ele.id);
 
-    // Detail
+    if ($('#'+ele.id).hasClass('active')) {
+        toggle = 'OFF';
+        $('#'+ele.id).removeClass('active');
+    }
+    else {
+        toggle = 'ON';
+        $('#'+ele.id).removeClass('btn-light').removeClass('btn-success');
+    }
+    $('#'+ele.id).removeClass('btn-light').removeClass('btn-success');
+
     $.ajax({
-            url: api+"/jobs/"+jobName+"/detail.txt",
-            dataType: "text",
-            type: 'GET',
-            jsonpCallback: 'callback',
-            crossDomain: true,
-            success: function(response) {
-                $('#ContentDetail').html('<pre>'+response+'</pre>');
-            }
+         url: api+"/call?call="+actuator+"&switch="+toggle,
+         dataType: "text",
+         type: 'GET',
+         crossDomain: true,
+         success: function(response) {
+             console.log(ele.id+': '+response);
+             if (response==1) 
+		$('#'+ele.id).addClass('active').addClass('btn-success');
+             else
+                $('#'+ele.id).addClass('btn-light');
+         }
     });
-    
-};
+}
+
+function Sensor (id) {
+var sensor
+    sensor = getEndPoint(id)
+ 
+    $.ajax({
+         url: api+"/get?state="+sensor,
+         dataType: "text",
+         type: 'GET',
+         crossDomain: true,
+         success: function(response) {
+             console.log(id+': '+response);
+             if (response==1)
+                $('#'+id).addClass('active').addClass('btn-success');
+             else
+                $('#'+id).addClass('btn-light');
+         }
+    });
+}
+
+
 </script>
 </body>
 </html>
