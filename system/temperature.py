@@ -8,6 +8,5 @@ def get_cpu_temperature():
 temperature = get_cpu_temperature()
 print(temperature)
 
-SendData.mqtt("system", "cpu/temperature", temperature)
-SendData.influxDB("system", "cpu/temperature", temperature)
+SendData.state("system", "cpu/temperature", temperature)
 

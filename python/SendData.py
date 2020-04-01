@@ -1,3 +1,6 @@
+USER_DIR='/home/pi'
+STATES_DIR='/home/pi/greenhouse/states'
+
 def mqtt (sensor, measurement, value) :
     import paho.mqtt.client as mqtt
     import json
@@ -12,9 +15,20 @@ def mqtt (sensor, measurement, value) :
 def influxDB (sensor, measurement, value) :
     from influxdb_client import InfluxDBClient, Point
     from influxdb_client.client.write_api import SYNCHRONOUS
-    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
+    client = InfluxDBClient.from_config_file(USER_DIR + "/influxdb.ini")
     write_api = client.write_api(write_options=SYNCHRONOUS)
     query_api = client.query_api()
     p = Point(measurement).tag("source", "vert").field(sensor, value)
     write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
     return 
+
+def file (sensor, measurement, value) :
+    f = open(STATES_DIR + '/' + sensor + '.txt', "w")
+    f.write( str(value) )
+    f.close()   
+ 
+def state (sensor, measurement, value) :
+    mqtt (sensor, measurement, value)
+    influxDB (sensor, measurement, value) 
+    file (sensor, measurement, value)
+
