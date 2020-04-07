@@ -1,0 +1,104 @@
+mochad-0.1.16
+
+    * Fix "Could not find endpoints" problem.
+
+mochad-0.1.15
+
+    * Add support for newer CM19A built in 2011 or later.
+
+mochad-0.1.14
+
+    * Fix OpenRemote too many open sockets problem. This result in delayed
+    responses to button presses.
+    * Add extended_code_1 command. This can be used to send shutters/blinds
+    control commands.
+
+mochad-0.1.13
+
+    * Fix -d debug command line option.
+
+    * The SP554A motion sensor with the switch in the home/away position is
+    now correctly decoded.
+
+    * Add exit to potential infinite loops.
+
+    * Add message for DS12A with cover off (tamper). The DS12A looks like
+    two DS10As with the cover on.
+
+
+mochad-0.1.12
+
+    * Add --raw-data option from Marc Merlin. Programs such as MisterHouse
+    can decode the raw RF data.
+
+mochad-0.1.11
+
+    * Fix xdim (extended dim) that only worked for unit code 3.
+
+mochad-0.1.10
+
+    * Fix major client socket problem. Commands from clients stopped working.
+
+mochad-0.1.9
+
+    * Add commands getstatus and getstatussec.
+    getstatus <HU>          -- Get device HU on/off status
+    getstatus <HU> xdim     -- Get device xdim status
+    getstatusec <RFSECAddr> -- Get RF security device status such as DS10A.
+
+    * Add port 1101 for OpenRemote 2.0. This is similar to port 1099 but does
+    not include unsolicited event messages. OR polls for device events using
+    getstatus and getstatussec.
+
+mochad-0.1.8
+
+    * Add support for X10 KR15A Big Red Button.
+    * Allow '\r' as well as '\n' for line termination
+    * Add more support for Flash XMLSocket clients including cross domain
+    policy request and response for Chumby widgets. This is required to allow
+    a Chumby widget to talk to mochad through an XMLSocket. Chumby widget
+    should be released real soon now.
+    * Add python-tk demo GUI application. Supports on and off buttons plus
+    brighness slider using LM465 soft-start lamp modules. The slider will not
+    work with older LM465 modules which lack soft-start. See apps/x10-tk.py.
+
+mochad-0.1.7
+
+    * Add Flash XMLSocket support on port 1100 for Chumby widgets.
+    * Fix RF checksum problem when receiving from CM15A for house codes 9-16.
+
+mochad-0.1.6
+
+    * Add RF event filter to eliminate the flurry of duplicate events.
+    This makes it much easier to write applications.
+    * Skip extra leading 0x5D on received RF packets from CM15A.
+
+mochad-0.1.5
+
+    * Fix RFCAM command so it shows the transmit message.
+    * Fix RF command which sent the wrong house in some cases. [ID: 3197002]
+
+mochad-0.1.4
+
+    * Fix RFCAM command so it takes house code as a parameter. For example,
+    RFCAM C CAMUP sends a camera pan up command on house code C.
+    Previously, RFCAM commands always used house code N. 
+
+mochad-0.1.3
+
+    * Change the method for sending dim/bright commands so it matches AHP
+    The new method uses 3 bytes instead of 2. This seems to work better
+    with LM465 soft-start devices. xdim works much better and is easier to use
+    but does not work with all lamp modules.
+    * Add example client programs in Perl and bash.
+    * Add --version command line parameter.
+    * Add support for SP554 motion sensor
+
+mochad-0.1.2
+
+    * Fix device name in log messages. CM19A was reported as CM15A.
+    * Add install option that makes the controllers hot pluggable. udev in
+    Ubunutu and hotplug2 in OpenWrt
+    * Convert to use autoconf and automake.
+    * Update mochad wiki pages with command and event reference. Also add
+    instructions for building with OpenWrt.

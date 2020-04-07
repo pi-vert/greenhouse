@@ -158,8 +158,12 @@ La structure est en deux niveaux séparés par un cadre en bois contenant le sys
 | Adresse | Description         |
 | ------- | -----------         |
 | 10      | Relai 12V           |            
-| 29      | TSL                 |
+| 29      | TSL2591             |
+| 38      | AHT15               |
+| 3F      | LCD                 |
+| 4B      | ADS1115             |
 | 51      | PCF8563/DVK512      |
+| 54      | CJMCU-8128 (CCS811 + SI7021 + BMP280) |
 | 76      | BME280              |
 
 ### Relais

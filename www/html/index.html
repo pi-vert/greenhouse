@@ -54,6 +54,9 @@
         <div id="CONTROL" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Contrôle</h1>
         </div>
+
+        <h2 class="h3">Serre</h2>
+
 	<button type="button" class="btn" id="airpump" onclick="Actuator(this)">Pompe à air</button>
 	<button type="button" class="btn" id="waterpump" onclick="Actuator(this)">Pompe à eau</button>
 	<button type="button" class="btn" id="sink"onclick="Actuator(this)">Purge</button>
@@ -62,6 +65,37 @@
         <button type="button" class="btn" id="fan" onclick="Actuator(this)">Ventilateur</button>
         <button type="button" class="btn" id="heater"onclick="Actuator(this)">Résistance</button>
 
+        <h2 class="h3">Balcon</h2>
+
+        <button type="button" class="btn" id="waterpump2" onclick="Actuator(this)">Pompe à eau</button>
+        <button type="button" class="btn" id="light2" onclick="Actuator(this)">Leds agricoles</button>
+
+    <!-- Three columns of text below the carousel -->
+        <div id="BOARD" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Tableaux de bord</h1>
+        </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Grafana</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <p><a class="btn btn-secondary" href="http://192.168.1.39:3000/" role="button">Voir &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Heading</h2>
+        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Heading</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
     </main>
 </div>
 </div>
@@ -69,7 +103,7 @@
 feather.replace();
 var api = 'http://192.168.1.39:8000';
 
-var sensors = ['airpump','waterpump','sink','light','heater','fan' ];
+var sensors = ['airpump','waterpump','sink','light','heater','fan','waterpump2','light2' ];
 sensors.forEach(Sensor);
 
 function getEndPoint(id) {
@@ -92,6 +126,13 @@ var actuator
             break;
         case 'fan':
             actuator = 'relays/i2c/fan';
+            break;
+/* Hydroponie */
+        case 'waterpump2':
+            actuator = 'relays/x10/waterpump';
+            break;
+        case 'light2':
+            actuator = 'relays/x10/light';
             break;
         default:
             actuator = 'relays/gpio/airpump';

@@ -1,4 +1,3 @@
-#!/usr/bin/pythoni3
 #--------------------------------------
 #    ___  ___  _ ____
 #   / _ \/ _ \(_) __/__  __ __
@@ -29,12 +28,13 @@ import time
 import os
 import time
 import sys
+import SendData
 
 from ctypes import c_short
 from ctypes import c_byte
 from ctypes import c_ubyte
 
-DEVICE = 0x76 # Default device I2C address
+DEVICE = 0x76 #
 HOST = 'localhost';
 
 bus = smbus.SMBus(1) # Rev 2 Pi, Pi 2 & Pi 3 uses bus 1
@@ -166,27 +166,6 @@ def readBME280All(addr=DEVICE):
 
   return temperature/100.0,pressure/100.0,humidity
 
-def publish (sensor, measurement, value) :
-    import paho.mqtt.client as mqtt
-    import json
-    client = mqtt.Client()
-    client.connect('localhost', 1883, 30)
-    client.loop_start()
-    client.publish( sensor, json.dumps( {measurement: value }), 1)
-    client.loop_stop()
-    client.disconnect()
-    return
-
-def store (sensor, measurement, value) :
-    from influxdb_client import InfluxDBClient, Point
-    from influxdb_client.client.write_api import SYNCHRONOUS
-    client = InfluxDBClient.from_config_file("/home/pi/influxdb.ini")
-    write_api = client.write_api(write_options=SYNCHRONOUS)
-    query_api = client.query_api()
-    p = Point(measurement).tag("source", "vert").field(sensor, value)
-    write_api.write(bucket="greenhouse", org="eric@angenault.net", record=p)
-    return 
-
 def main():
 
   (chip_id, chip_version) = readBME280ID()
@@ -199,12 +178,9 @@ def main():
   print ("Pressure : ", pressure, "hPa")
   print ("Humidity : ", humidity, "%")
 
-  publish('sensors/bme280/1', 'temperature', temperature)
-  store('sensors/bme280/1', 'temperature', temperature)
-  publish('sensors/bme280/1', 'pressure', pressure)
-  store('sensors/bme280/1', 'pressure', pressure)
-  publish('sensors/bme280/1', 'humidity', humidity)
-  store('sensors/bme280/1', 'humidity', humidity)
+  SendData.state('sensors/bme280/1', 'temperature', temperature)
+  SendData.state('sensors/bme280/1', 'pressure', pressure)
+  SendData.state('sensors/bme280/1', 'humidity', humidity)
 
 if __name__=="__main__":
    main()
