@@ -107,52 +107,63 @@ La structure est en deux niveaux séparés par un cadre en bois contenant le sys
             GND |  |39 --(o o)--40 |21| GND
 ```
 
-| GPIO | PinOut      | Utilisation |
-| ---- | ----------- | ---------- |
-|    1 | + 3.3V      |            |
-|    2 | + 5V        |            |
-|    3 | I2C (Data)  |            |
-|    4 | + 5V        |            |
-|    5 |             |            |
-|    6 |             |            |
-|    7 | GCLK        |            |
-|    8 | UART TXD -->|            |
-|    9 | - GND       |            |
-|   10 | UART RXD <--|            |
-|   11 |             |            |
-|   12 | PWM0        |            |
-|   13 |             |            |
-|   14 |             |            |
-|   15 |             |            |
-|   16 |             |            |
-|   17 | + 3.3V      |            |
-|   18 |             |            |
-|   19 | Relai GPIO  |            |
-|   20 | Relai GPIO  |            |
-|   21 | Relai GPIO  |            |
-|   22 |             |            |
-|   23 |             |            |
-|   24 |             |            |
-|   25 | - GND       |            |
-|   26 | Relai GPIO  |            |
-|------|-------------|------------|
-|      | PIFACE      |            |
-|------|-------------|------------|
-|   27 | I2C/EEPROM  |            |
-|   28 | I2C/EEPROM  |            |
-|   29 |             |            |
-|   30 |             |            |
-|   31 |             |            |
-|   32 | PWM0     -->|  WS2812    |
-|   33 |             |            |
-|   34 |             |            |
-|   35 |             |            |
-|   36 |             |            |
-|   37 |             |            |
-|   38 |             |            |
-|   39 | - GND       |            |
-|   40 |             |            |
+| Phys. | GPIO        | PinOut      | Utilisation |
+| ----  | ----------- | ---------- |
+|    1  | + 3.3V      |            |
+|    2  | + 5V        |            |
+|    3  | I2C (Data)  |            |
+|    4  | + 5V        |            |
+|    5  |             |            |
+|    6  |             |            |
+|    7  | GCLK        |            |
+|    8  | UART TXD -->|            |
+|    9  | - GND       |            |
+|   10  | UART RXD <--|            |
+|   11  |             |            |
+|   12  | GPIO 18          | PWM0       | Leds WS2812B |
+|   13  |             |            |
+|   14  |             |            |
+|   15  | GPIO 22     | Brumisateur  |
+|   16  |             |            |
+|   17  | + 3.3V       |            |
+|   18  | WS2812B      | Leds Alarmes |
+|   19  |    |            |
+|   20  |    |            |
+|   21  |    |            |
+|   22  | 
+|   23  | 
+|   24  |              |            |
+|   25  | - GND        |            |
+|   26  |    |            |
+|   27  | I2C/EEPROM  |            |
+|   28  | I2C/EEPROM  |            |
+|   29  |             |            |
+|   30  |             |            |
+|   31  |             |            |
+|   32  |             |            |
+|   33  |             |            |
+|   34  |             |            |
+|   35  | GPIO 19     | Relai GPIO | Leds agricoles  |
+|   36  |             |            |
+|   37  | GPIO 26     | Relai GPIO | Resistance      |
+|   38  | GPIO 20     | Relai GPIO | Airpump         |
+|   39  | - GND       |            |                 |
+|   40  | GPIO 21     | Relai GPIO | Waterpump       |
 
+Par GPIO
+| GPIO | Utilisatio   |
+|------|----------    |
+| 17   | Brumisateur  |   
+| 18   | WS2812B      |
+| 19   | Leds agricoles |
+| 20   | Pompe à air    |
+| 21   | Pompe à eau    |
+| 22   |                |
+| 23   | Aération       |
+| 24   | Pompe Bleue    |
+| 25   | Pompe Marron   |
+| 26   | Résistance     |
+| 
 ## I2C
 
 | Adresse | Description         |

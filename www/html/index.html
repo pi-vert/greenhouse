@@ -101,10 +101,15 @@
 </div>
 <script type="text/javascript">
 feather.replace();
-var api = 'http://192.168.1.39:8000';
+var api = 'http://'+window.location.hostname+':8000';
 
 var sensors = ['airpump','waterpump','sink','light','heater','fan','waterpump2','light2' ];
-sensors.forEach(Sensor);
+
+function checkSensors() {
+	sensors.forEach(Sensor);
+}
+
+setInterval(checkSensors(), 30000);
 
 function getEndPoint(id) {
 var actuator
