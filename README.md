@@ -173,7 +173,7 @@ Par GPIO
 | 38      | AHT15               |
 | 3F      | LCD                 |
 | 4B      | ADS1115             |
-| 51      | PCF8563/DVK512      |
+| 51      | PCF8563/DVK512      | Abandonné 
 | 54      | CJMCU-8128 (CCS811 + SI7021 + BMP280) |
 | 76      | BME280              |
 
