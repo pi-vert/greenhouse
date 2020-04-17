@@ -1,6 +1,5 @@
 import sys
 import SendData
-import lcddriver
 
 def lireFichier (emplacement) :
     fichTemp = open(emplacement)
@@ -32,7 +31,4 @@ temperatureR = recupTemp (contenuFich)*1.025
 print ("Temperature_R: ", temperatureR)
 
 SendData.state('sensors/ds18b20', 'temperatureR', temperatureR)
-
-lcd = lcddriver.lcd()
-lcd.lcd_display_string(str(round(temperatureG,1))+chr(223)+' '+str(round(temperatureY,1))+chr(223)+' '+str(round(temperatureR,1))+chr(223), 1)
 

@@ -8,6 +8,6 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(Relay,GPIO.OUT)
-GPIO.output(Relay,GPIO.LOW)
+GPIO.output(Relay,GPIO.HIGH)
 
 SendData.state('relays/gpio', 'waterpump', 0)
