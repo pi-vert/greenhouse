@@ -1,0 +1,37 @@
+# CJMCU-8128 Module Breakout
+
+The CJMCU-8128 is a small breakout board available at Banggood.com or
+Aliexpress. It comes with 3 main sensors onboard including:
+
+* BMP280 - pressure & temperature
+* HDC10XX - humidity & temperature
+* CCS811 - CO2 & Volatile Organic Compound (VOC) index
+
+The breakout board communicates using i2c and therefore all sensors
+can be accesssed via that protocol simply by connecting up the SDA, SCL,
+VCC and GND pins on the sensor.
+
+## Getting Started
+
+Each of the included submodules in this repo caters to one of the included
+submodules on the board. By cloning the rpeo and submodules then checking
+each submodule you wiulkl find example code to test each section fo the board.
+
+An example script is alos provided in the root of the project which
+combines the 3 libraries into one.
+
+## Prerequisities
+
+Python 2.7+
+
+## Running the tests
+
+No tests are provided iun thre root project but you may find tests for
+each sensor in their respective libraries along with examples of
+their use.
+
+## Included Libraries
+
+* [Adafruit CCS811 Python](https://github.com/adafruit/Adafruit_CCS811_python)
+* [Adafruit Python BM(E/P)280](https://github.com/adafruit/Adafruit_BME280_Library)
+* [SDL Pi HDC1000](https://github.com/switchdoclabs/SDL_Pi_HDC1000)

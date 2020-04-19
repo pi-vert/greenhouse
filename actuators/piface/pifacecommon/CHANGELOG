@@ -1,0 +1,108 @@
+Change Log
+==========
+
+v4.2.0
+------
+- Added daemon flag for PortEventListener.
+
+v4.1.2
+------
+- Fixed bug with new Device Tree (Pi2) by changing GPIO_INTERRUPT_DEVICE
+  from `/sys/devices/virtual/gpio/` to `/sys/class/gpio/` and changing udev
+  rule.
+
+
+v4.1.1
+------
+- Support varying listeners.
+
+
+v4.1.0
+------
+- Added deregister to interrupts.
+
+
+v4.0.1
+------
+- Fixed SPI file descriptor bug when closing.
+- Fixed issue #14.
+
+
+v4.0.0
+------
+- Ignored "Interrupted system call" error in `watch_port_events`.
+- Rewrite main functions into chip specific (MCP23S17) class.
+- GPIOInterruptDevice class replacing core GPIO enable/disable functions.
+- SPIDevice class replacing spisend function. Can now add in spi_callback
+  function which is called before each SPI write.
+- Updated installation instructions.
+
+
+v3.1.1
+------
+- Added IODIR_FALLING_EDGE and IODIR_RISING_EDGE to replace IODIR_ON and
+  IODIR_OFF respectively. IODIR_ON and IODIR_OFF can still be used in the same
+  way as before. Falling/Rising Edge are for physical level 1/0, On/Off are for
+  logical (programmer) level 1/0.
+
+    Physical Level (pifacecommon.read_bit):
+        IODIR_FALLING_EDGE: 1 -> 0
+        IODIR_RISING_EDGE: 0 -> 1
+    Logical Level (pifacedigitalio.PiFaceDigital().input_pins[0].value):
+        IODIR_ON: 0 -> 1
+        IODIR_OFF: 1 -> 0
+
+    Remember that PiFace Digital Inputs are active low:
+        >>> pifacecommon.read_bit(0, INPUT_PORT)
+        >>> 1  # physical
+        >>> pifacedigitalio.PiFaceDigital().input_pins[0].value
+        >>> 0  # logical
+
+- Fixed Debian package bug where setup script would not be executed.
+
+v3.1.0
+------
+- Added debouncing with adjustable `settle time`.
+
+v3.0.0
+------
+- Added timeout class (fixing Issue #2) in interrupts.
+- Added support for interrupts on multiple boards.
+- Interrupts must be enabled/disabled manually. Automatic handling of this
+  broke interrupts from multiple boards.
+
+v2.0.2
+------
+- Moved version number to pifacecommon/version.py so that it can be read from
+  setup.py and bin/uninstall.py.
+- Updated SPI help link to point to the new docs.
+- Moved installation scripts into single file for Debian packaging.
+
+v2.0.1
+------
+- Added version number in source.
+- Added uninstall script.
+
+v2.0.0
+------
+- Improved interrupts (different API, check the docs).
+- Reduced scope of global variables from package to individual modules.
+  (Hiding namespaces from the end user is an attempt to simplify the interface
+  for children. However this package is not intended for that audience
+  and so messing with the namespaces only confuses things.)
+
+v1.2.1
+------
+- Supports Python 2.
+- Started using semantic versioning http://semver.org/.
+
+v1.2
+----
+- Started using a change log!
+- Removed errors submodule, custom exceptions now go in their respective
+  modules. This might change back in a future release.
+- Fixed DigitalInput value bugs
+- Fixed SPI transfer bug.. Function spisend now takes bytes as an argument
+  instead of a list. This makes more sense, since it returns bytes.
+- Removed install.sh, everything is now handled by setup.py.
+- Updated docs.

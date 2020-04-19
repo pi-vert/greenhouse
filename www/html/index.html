@@ -115,32 +115,32 @@ function getEndPoint(id) {
 var actuator
     switch (id) {
         case 'airpump':
-            actuator = 'relays/gpio/airpump';
+            actuator = 'actuators/gpio/airpump';
             break;
         case 'waterpump':
-            actuator = 'relays/gpio/waterpump';
+            actuator = 'actuators/gpio/waterpump';
             break;
         case 'sink':
-            actuator = 'relays/i2c/sink';
+            actuator = 'actuators/i2c/sink';
             break;
         case 'light':
-            actuator = 'relays/i2c/light';
+            actuator = 'actuators/i2c/light';
             break;
         case 'heater':
-            actuator = 'relays/gpio/heater';
+            actuator = 'actuators/gpio/heater';
             break;
         case 'fan':
-            actuator = 'relays/i2c/fan';
+            actuator = 'actuators/i2c/fan';
             break;
 /* Hydroponie */
         case 'waterpump2':
-            actuator = 'relays/x10/waterpump';
+            actuator = 'actuators/x10/waterpump';
             break;
         case 'light2':
-            actuator = 'relays/x10/light';
+            actuator = 'actuators/x10/light';
             break;
         default:
-            actuator = 'relays/gpio/airpump';
+            actuator = 'actuators/gpio/airpump';
     }
 return actuator;
 }

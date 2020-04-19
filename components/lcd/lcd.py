@@ -9,8 +9,8 @@ def getValue(filename):
 
 lcd = lcddriver.lcd()
 
-humidity = getValue("/home/pi/greenhouse/states/sensors/aht15/humidity.txt")
-temperature = getValue("/home/pi/greenhouse/states/sensors/aht15/temperature.txt")
+humidity = getValue("/home/pi/greenhouse/states/sensors/aht10/humidity.txt")
+temperature = getValue("/home/pi/greenhouse/states/sensors/aht10/temperature.txt")
 
 temperatureG = getValue("/home/pi/greenhouse/states/sensors/ds18b20/temperatureG.txt")
 temperatureY = getValue("/home/pi/greenhouse/states/sensors/ds18b20/temperatureY.txt")

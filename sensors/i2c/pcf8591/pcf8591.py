@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-
 '''
 Lecture de l'entrée analogique A0 d'un module
 PCF8591 branché au Raspberry Pi.
@@ -13,6 +12,12 @@ import smbus  # nécessaire pour la communication i2c
 import time   # nécessaire pour le délai
 import paho.mqtt.client as mqtt
 import json
+import tca9548a
+
+# Multiplexer
+address=0x70
+plexer = tca9548a.multiplex(1)
+plexer.channel(address,0)
 
 addresse = 0x48 # adresse i2c du module PCF8691
 
