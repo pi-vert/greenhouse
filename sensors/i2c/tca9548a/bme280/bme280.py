@@ -177,7 +177,5 @@ print ("Temperature : ", temperature, "C")
 print ("Pressure : ", pressure, "hPa")
 print ("Humidity : ", humidity, "%")
 
-SendData.state('sensors/bme280', 'temperature', temperature)
-SendData.state('sensors/bme280', 'pressure', pressure)
-SendData.state('sensors/bme280', 'humidity', humidity)
+SendData.states('sensors/bme280', {'temperature': temperature, 'pressure': pressure, 'humidity': humidity})
 

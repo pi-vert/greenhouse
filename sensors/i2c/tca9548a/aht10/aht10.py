@@ -31,9 +31,8 @@ ctemp = ((temp*200) / 1048576) - 50
 print(u'Temperature: {0:.1f}C'.format(ctemp))
 tmp = ((data[1] << 16) | (data[2] << 8) | data[3]) >> 4
 
-ctmp = int(tmp * 100 / 1048576)
-print(u'Humidity: {0}%'.format(ctmp))
+humidity = int(tmp * 100 / 1048576)
+print(u'Humidity: {0}%'.format(humidity))
 
-SendData.state("sensors/aht10","temperature",ctemp)
-SendData.state("sensors/aht10","humidity",ctmp)
+SendData.states("sensors/aht10",{ "temperature": ctemp, "humidity": humidity })
 

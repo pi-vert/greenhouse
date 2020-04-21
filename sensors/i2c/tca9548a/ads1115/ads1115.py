@@ -14,19 +14,10 @@ from adafruit_ads1x15.analog_in import AnalogIn
 
 import SendData
 ads = ADS.ADS1115(i2c)
-chan = AnalogIn(ads, ADS.P0)
-SendData.state('sensors/ads1115', 'EC', chan.value)
+P0 = AnalogIn(ads, ADS.P0)
 #print ( chan.value, chan.voltage )
+P1 = AnalogIn(ads, ADS.P1)
+P2 = AnalogIn(ads, ADS.P2)
+P3 = AnalogIn(ads, ADS.P3)
 
-chan = AnalogIn(ads, ADS.P1)
-SendData.state('sensors/ads1115', 'Po', chan.value)
-#print ( chan.value, chan.voltage )
-
-chan = AnalogIn(ads, ADS.P2)
-SendData.state('sensors/ads1115', 'Do', chan.value)
-#print ( chan.value, chan.voltage )
-
-chan = AnalogIn(ads, ADS.P3)
-SendData.state('sensors/ads1115', 'To', chan.value)
-#print ( chan.value, chan.voltage )
-
+SendData.states('sensors/ads1115', { 'EC': P0.value, 'Po': P1.value, 'Do': P2.value, 'To': P3.value })

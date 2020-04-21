@@ -27,7 +27,5 @@ full_spectrum = sensor.Read_FullSpectrum
 print('Full spectrum (IR + visible) light: %d\r\n'%full_spectrum)
 sensor.Disable()
 
-SendData.state('sensors/tsl2591', 'light', visible)
-SendData.state('sensors/tsl2591', 'infrared', infrared)
-SendData.state('sensors/tsl2591', 'lux', lux)
+SendData.states('sensors/tsl2591', { 'light': visible, 'infrared': infrared, 'lux': lux })
 

@@ -21,19 +21,17 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-* *  * * * python3 /home/pi/greenhouse/sensors/bme280/bme280.py
-* *  * * * python3 /home/pi/greenhouse/sensors/ds18b20/ds18b20.py
-* *  * * * python3 /home/pi/greenhouse/sensors/tsl2591/tsl2591.py
-* *  * * * python3 /home/pi/greenhouse/sensors/pcf8591/pcf8591.py
+PYTHONPATH=/home/pi/greenhouse/python
 
-* 6  * * * python3 /home/pi/greenhouse/relays/i2c/light_ON.py
-0 9  * * * python3 /home/pi/greenhouse/relays/i2c/light_OFF.py
-* 17 * * * python3 /home/pi/greenhouse/relays/i2c/light_ON.py
-0 22 * * * python3 /home/pi/greenhouse/relays/i2c/light_OFF.py
-* 7  * * * python3 /home/pi/greenhouse/relays/gpio/waterpump_ON.py
-0 22 * * * python3 /home/pi/greenhouse/relays/gpio/waterpump_OFF.py 
-0 10  * * * python3 /home/pi/greenhouse/relays/gpio/airpump_ON.py
-0 11 * * * python3 /home/pi/greenhouse/relays/gpio/airpump_OFF.py
-30 14 * * * python /home/pi/greenhouse/relays/gpio/airpump_ON.py
-30 17 * * * python /home/pi/greenhouse/relays/gpio/airpump_OFF.py
+@reboot python3 /home/pi/greenhouse/www/rest/a.py &
 
+* *  * * * python3 /home/pi/greenhouse/sensors/1-wire/ds18b20/ds18b20.py
+
+* *  * * * python3 /home/pi/greenhouse/sensors/i2c/tca9548a/ads1115/ads1115.py
+#* *  * * * sleep 10;python3 /home/pi/greenhouse/sensors/i2c/tca9548a/bme280/bme280.py
+* *  * * * sleep 20;python3 /home/pi/greenhouse/sensors/i2c/tca9548a/tsl2591/tsl2591.py
+* *  * * * sleep 30;python3 /home/pi/greenhouse/sensors/i2c/tca9548a/pcf8591/pcf8591.py
+* *  * * * sleep 40;python3 /home/pi/greenhouse/sensors/i2c/tca9548a/aht10/aht10.py
+* *  * * * sleep 40;python3 /home/pi/greenhouse/sensors/i2c/tca9548a/bme280/bme280.py
+
+* *  * * * sleep 55;python3 /home/pi/greenhouse/components/lcd/lcd.py

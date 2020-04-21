@@ -151,17 +151,17 @@ La structure est en deux niveaux séparés par un cadre en bois contenant le sys
 |   40  | GPIO 21     | Relai GPIO | Waterpump       |
 
 Par GPIO
-| GPIO | Utilisatio   |
+| GPIO | Utilisation   |
 |------|----------    |
-| 17   | Brumisateur  |   
+| 17   |                |   
 | 18   | WS2812B      |
 | 19   | Leds agricoles |
 | 20   | Pompe à air    |
 | 21   | Pompe à eau    |
-| 22   |                |
-| 23   | Aération       |
-| 24   | Pompe Bleue    |
-| 25   | Pompe Marron   |
+| 22   | Brumisateur    |
+| 23   | Pompe A        |
+| 24   | Pompe B        |
+| 25   |                |
 | 26   | Résistance     |
 | 
 ## I2C

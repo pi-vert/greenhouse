@@ -8,6 +8,12 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(Relay,GPIO.OUT)
-GPIO.output(Relay,GPIO.HIGH)
 
+GPIO.output(Relay,GPIO.HIGH)
 SendData.state('relays/l293d', 'pump B', 1)
+time.sleep(5)
+
+GPIO.output(Relay,GPIO.LOW)
+SendData.state('relays/l293d', 'pump B', 0)
+
+GPIO.cleanup()
