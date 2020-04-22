@@ -25,6 +25,7 @@ def call():
     with open('/home/pi/greenhouse/' + call + '_' + switch + '.py', 'r') as content_file:
         content = content_file.read()
     result =  exec(content)
+    print('/home/pi/greenhouse/' + call + '_' + switch + '.py');
     if switch=='ON' :
         return '1'
     else :

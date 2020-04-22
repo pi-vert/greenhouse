@@ -1,0 +1,14 @@
+resolution 640*480
+skip 3
+jpeg 95
+delay 5
+font sans:15
+#set brightness=20%
+#set contrast=20%
+title "GreenHouse"
+subtitle "Lausanne"
+info "E. Angenault"
+timestamp "%d-%m-%Y %H:%M:%S (%Z)"
+save /home/pi/greenhouse/www/html/pictures/test.jpg
+#exec /home/pi/fswebcam.sh
+loop 5 

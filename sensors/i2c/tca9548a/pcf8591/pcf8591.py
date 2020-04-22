@@ -1,16 +1,5 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-'''
-Lecture de l'entrée analogique A0 d'un module
-PCF8591 branché au Raspberry Pi.
-Plus d'infos:
-https://electroniqueamateur.blogspot.com/2019/01/pcf8591-et-raspberry-pi.html
-'''
-
-import smbus  # nécessaire pour la communication i2c
-import time   # nécessaire pour le délai
-import paho.mqtt.client as mqtt
-import json
+import smbus
+import time
 import tca9548a
 import SendData
 
@@ -19,29 +8,49 @@ address=0x70
 plexer = tca9548a.multiplex(1)
 plexer.channel(address,0)
 
-addresse = 0x48 # adresse i2c du module PCF8691
+# for RPI version 1, use "bus = smbus.SMBus(0)"
+bus = smbus.SMBus(1)
 
-bus = smbus.SMBus(1) # définition du bus i2c (parfois 0 ou 2)
+#check your PCF8591 address by type in 'sudo i2cdetect -y -1' in terminal.
+def setup(Addr):
+   global address
+   address = Addr
 
-# utiliser 0x40 pour A0, 0x41 pour A1, 0x42 pour A2 et 0x43 pour A3
-bus.write_byte(addresse,0x41)
-potentiometer = bus.read_byte(addresse)
-print("Potentiometer: %3d" %(potentiometer))
+def read(chn): #channel
+   if chn == 0:
+      bus.write_byte(address,0x40)
+   if chn == 1:
+      bus.write_byte(address,0x41)
+   if chn == 2:
+      bus.write_byte(address,0x42)
+   if chn == 3:
+      bus.write_byte(address,0x43)
+      bus.read_byte(address) # dummy read to start conversion
+   return bus.read_byte(address)
 
-bus.write_byte(addresse,0x40)
-analog = bus.read_byte(addresse)
-print("Analog: %3d" %(analog))
-SendData.state('sensors/pcf8591', 'analog', analog)
 
-bus.write_byte(addresse,0x42)
-photoresistor = bus.read_byte(addresse)
-print("Photoresistor: %3d" %(photoresistor))
-SendData.state('sensors/pcf8591', 'photoresistor', photoresistor)
+def write(val):
+   temp = val # move string value to temp
+   temp = int(temp) # change string to integer
+   # print temp to see on terminal else comment out
+   bus.write_byte_data(address, 0x40, temp)
 
-bus.write_byte(addresse,0x43)
-thermistor = bus.read_byte(addresse)
-print("Thermistor: %3d" %(thermistor))
+setup(0x48)
+analog = read(0) 
+print('AIN0 = ', analog)
+
+thermistor = read(1)
+print('Thermistor = ', thermistor)
+
+potentiometer = read(2)
+print('Potentiometer = ', potentiometer)
+
+photoresistor = read(3)
+print('Photoresistor = ', photoresistor)
+
+#tmp = read(0)
+#tmp = tmp*(255-125)/255+125 # LED won't light up below 125, so convert '0-255' to '125-255'
+#write(tmp)
 
 SendData.states('sensors/pcf8591', { 'analog': analog, 'photoresistor': photoresistor, 'thermistor': thermistor, 'potentiometer': potentiometer })
-
 

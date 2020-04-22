@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import SendData
 
-Relay = 24
+Relay = 27
 
 GPIO.setwarnings(True)
 GPIO.setmode(GPIO.BCM)
