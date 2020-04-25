@@ -25,7 +25,7 @@ def read(chn): #channel
       bus.write_byte(address,0x42)
    if chn == 3:
       bus.write_byte(address,0x43)
-      bus.read_byte(address) # dummy read to start conversion
+   bus.read_byte(address) # dummy read to start conversion
    return bus.read_byte(address)
 
 
@@ -37,20 +37,21 @@ def write(val):
 
 setup(0x48)
 analog = read(0) 
-print('AIN0 = ', analog)
+print('Analog = ', analog)
 
-thermistor = read(1)
-print('Thermistor = ', thermistor)
-
-potentiometer = read(2)
+potentiometer = read(1)
 print('Potentiometer = ', potentiometer)
 
-photoresistor = read(3)
+photoresistor = read(2)
 print('Photoresistor = ', photoresistor)
 
-#tmp = read(0)
-#tmp = tmp*(255-125)/255+125 # LED won't light up below 125, so convert '0-255' to '125-255'
-#write(tmp)
+thermistor = read(3)
+print('Thermistor = ', thermistor)
+
+tmp = photoresistor
+tmp = tmp*(255-125)/255+125 # LED won't light up below 125, so convert '0-255' to '125-255'
+print (tmp)
+write(tmp)
 
 SendData.states('sensors/pcf8591', { 'analog': analog, 'photoresistor': photoresistor, 'thermistor': thermistor, 'potentiometer': potentiometer })
 
